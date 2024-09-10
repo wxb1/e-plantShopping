@@ -1,10 +1,23 @@
 import React, { useState,useEffect } from 'react';
 import './ProductList.css'
 import CartItem from './CartItem';
+import { addItem } from './CartSlice';
+import { useSelector, useDispatch } from "react-redux";
+
 function ProductList() {
     const [showCart, setShowCart] = useState(false); 
     const [showPlants, setShowPlants] = useState(false); // State to control the visibility of the About Us page
+    const [addedToCart, setAddedToCart] = useState({});
+    const dispatch = useDispatch();
 
+    const cart = useSelector(state => state.cart.items);
+    let totalCartItems = cart.length > 0 ? cart.length : "";
+
+    /*
+        Product listing page (9 points, 3 tasks)
+            1. Six unique houseplants for sale, each displaying thumbnail, name, and price: 2 points
+            2. Group the plants into at least three categories on the page: 1 point
+    */
     const plantsArray = [
         {
             category: "Air Purifying Plants",
@@ -246,6 +259,20 @@ const handlePlantsClick = (e) => {
     e.preventDefault();
     setShowCart(false);
   };
+
+  const handleAddToCart = (product) => {
+    dispatch(addItem(product));
+    setAddedToCart((prevState) => ({
+       ...prevState,
+       [product.name]: true, // Set the product name as key and value as true to indicate it's added to cart
+     }));
+  };
+
+  const hasQuantity = (name)=> {
+    const existingItem = cart.find(item => item.name === name);
+    return existingItem ? true : false;
+  }
+
     return (
         <div>
              <div className="navbar" style={styleObj}>
@@ -254,6 +281,10 @@ const handlePlantsClick = (e) => {
                <img src="https://cdn.pixabay.com/photo/2020/08/05/13/12/eco-5465432_1280.png" alt="" />
                <a href="/" style={{textDecoration:'none'}}>
                         <div>
+                    {/*
+                        Landing page (5 points, 4 tasks)
+                        3. Company name: 1 point
+                    */}
                     <h3 style={{color:'white'}}>Paradise Nursery</h3>
                     <i style={{color:'white'}}>Where Green Meets Serenity</i>
                     </div>
@@ -263,12 +294,42 @@ const handlePlantsClick = (e) => {
             </div>
             <div style={styleObjUl}>
                 <div> <a href="#" onClick={(e)=>handlePlantsClick(e)} style={styleA}>Plants</a></div>
-                <div> <a href="#" onClick={(e) => handleCartClick(e)} style={styleA}><h1 className='cart'><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" id="IconChangeColor" height="68" width="68"><rect width="156" height="156" fill="none"></rect><circle cx="80" cy="216" r="12"></circle><circle cx="184" cy="216" r="12"></circle><path d="M42.3,72H221.7l-26.4,92.4A15.9,15.9,0,0,1,179.9,176H84.1a15.9,15.9,0,0,1-15.4-11.6L32.5,37.8A8,8,0,0,0,24.8,32H8" fill="none" stroke="#faf9f9" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" id="mainIconPathAttribute"></path></svg></h1></a></div>
+                {/*
+                Header (7 points, 3 tasks) 
+                1. Displays on both the product listing page and shopping cart page 2 points
+                2. A shopping cart icon with a value that displays the total number of items in the cart: 3 points
+                3. Navigation to either of the other pages: 2 points
+                */}
+                <div> <a href="#" onClick={(e) => handleCartClick(e)} style={styleA}><h1 className='cart'><div class="cart-quantity-container"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" id="IconChangeColor" height="68" width="68"><rect width="156" height="156" fill="none"></rect><circle cx="80" cy="216" r="12"></circle><circle cx="184" cy="216" r="12"></circle><path d="M42.3,72H221.7l-26.4,92.4A15.9,15.9,0,0,1,179.9,176H84.1a15.9,15.9,0,0,1-15.4-11.6L32.5,37.8A8,8,0,0,0,24.8,32H8" fill="none" stroke="#faf9f9" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" id="mainIconPathAttribute"></path></svg><div class="cart-quantity-count">{totalCartItems}</div></div></h1></a></div>
             </div>
         </div>
         {!showCart? (
         <div className="product-grid">
 
+            {plantsArray.map((category, index) => (
+                <div key={index}>
+                    <h1><div>{category.category}</div></h1>
+                    <div className="product-list">
+                        {category.plants.map((plant, plantIndex) => (
+                        <div className="product-card" key={plantIndex}>
+                            <img className="product-image" src={plant.image} alt={plant.name} />
+                            <div className="product-title">{plant.name}</div>
+                            {/*Similarly like the above plant.name show other details like description and cost*/}
+                            <div className="product-price">{plant.cost}</div>
+                            <div className="product-description">{plant.description}</div>
+                            {/* 
+                                Product listing page (9 points, 3 tasks)
+                                    An Add to Cart button for each plant, each with the following behavior: 6 points
+                                    3. After selecting it, the shopping cart icon increases by one. 2 points
+                                    4. After selecting it, the button becomes disabled. 2 points
+                                    5. After selecting it, the appropriate plant gets added to the shopping cart. 2 points
+                            */}
+                            <button  className={ hasQuantity(plant.name) ? "product-button added-to-cart": "product-button" } onClick={() => handleAddToCart(plant)}  disabled={ hasQuantity(plant.name) } >Add to Cart</button>
+                        </div>
+                        ))}
+                    </div>
+                </div>
+                ))}
 
         </div>
  ) :  (

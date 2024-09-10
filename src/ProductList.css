@@ -92,6 +92,10 @@ body {
     margin-bottom: 10px;
 }
 
+.product-description {
+ font-style: italic;
+}
+
 .product-image {
     max-width: 100%;
     height: 200px; /* Adjust height for better consistency */
@@ -164,6 +168,19 @@ body {
     color: white;
     display: flex;
 }
+.cart-quantity-container {
+    position: relative;
+}
+
+.cart-quantity-count {
+    position: absolute;
+    top: 0px;
+    width: 100%;
+    text-align: center;
+    font-size: 30px;
+    line-height: 2.2;
+}
+
 .cart_quantity_count{
     margin-top: 16px;
     /* background-color: red; */

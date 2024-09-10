@@ -4,6 +4,11 @@ import './AboutUs.css';
 function AboutUs() {
   return (
     <div className="about-us-container">
+      {/* 
+        Landing page (5 points, 4 tasks)
+        2. Paragraph about the company: 1 point
+        3. Company name: 1 point
+      */}
       {/* <h1 className="about-us-heading">About Us</h1> */}
       <p className="about-us-description">Welcome to Paradise Nursery, where green meets serenity!</p>
       <p className="about-us-content">

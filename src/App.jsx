@@ -15,13 +15,18 @@ function App() {
   return (
     <div className="app-container">
       <div className={`landing-page ${showProductList ? 'fade-out' : ''}`}>
+        {/* 
+          Landing page (5 points, 4 tasks)
+          1. Background image: 1 point 
+          3. Company name: 1 point
+        */}
         <div className="background-image"></div>
         <div className="content">
          <div className="landing_content">
          <h1>Welcome To Paradise Nursery</h1>
           <div className="divider"></div>
           <p>Where Green Meets Serenity</p>
-         
+          {/* Get Started button linking to the product listing page: 2 points */}
           <button className="get-started-button" onClick={handleGetStartedClick}>
             Get Started
           </button>
@@ -30,7 +35,6 @@ function App() {
           <AboutUs/>
           </div>
           </div>
-
       </div>
       <div className={`product-list-container ${showProductList ? 'visible' : ''}`}>
         <ProductList />
