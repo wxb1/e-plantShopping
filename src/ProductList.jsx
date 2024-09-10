@@ -279,7 +279,7 @@ const handlePlantsClick = (e) => {
             <div className="tag">
                <div className="luxury">
                <img src="https://cdn.pixabay.com/photo/2020/08/05/13/12/eco-5465432_1280.png" alt="" />
-               <a href="/" style={{textDecoration:'none'}}>
+               <a href="/e-plantShopping" style={{textDecoration:'none'}}>
                         <div>
                     {/*
                         Landing page (5 points, 4 tasks)
